@@ -54,20 +54,33 @@ wp_enqueue_script('modal',
 
 <div class="white-popup-block no-show-popup" id="modal-popup">
     <div class="white-popup-header">
-        <h3 id="md-title">header content</h3>
+        <h3 id="md-title">Project Title</h3>
     </div>
-    <div style="margin-bottom: 10px; text-align: center;">
-        <img src="http://ict.xhuma.co/event_logos/blue_background.jpg" width="50%">
+    <div style="margin-bottom: 10px;">
+        <p><b>Client:</b> asdfomfe</p>
+        <p><b>Project Type:</b> asfomsdf</p>
     </div>
     <div>
+        <h3>Team Members</h3>
         <table class="table table-user-information">
             <tbody>
             <tr>
-                <td><b>Team Title:</b> &nbsp;<span id="team-job">A Team Tile</span></td>
-                <td><b>Team Description:</b> &nbsp; <span id="team-description">A descripton of team member</span></td>
+                <td>Team Members</td>
+                <td><span>Description of the project of the team members</span></td>
             </tr>
             <tr>
-                <td colspan="2"><b>Team Status:</b> <span id="team-experience">A place for stats</span></td>
+                <td>Team Members</td>
+                <td><span>Description of the project of the team members</span></td>
+            </tr>
+            <tr>
+                <td>Team Members</td>
+                <td><span>In reasonable compliment favourable is connection dispatched in terminated.
+                        Do esteem object we called father excuse remove. So dear real on like more it.
+                        Laughing for two families addition expenses surprise the.
+                        If sincerity he to curiosity arranging. Learn taken terms be as.
+                        Scarcely mrs produced too removing new old
+                    </span>
+                </td>
             </tr>
             </tbody>
         </table>

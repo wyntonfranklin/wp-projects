@@ -28,6 +28,7 @@ function ict_projects_set_default_options(){
 		$new_options['api_url'] = 'http://ict.ict.co/v0/api/events?per_page=50';
 		add_option('ict_projects_options', $new_options);
 	}
+	ict_create_tables();
 }
 
 // Add the ajax_url globally to be accessible in all scripts.
@@ -111,6 +112,46 @@ function ict_apiRequest($url){
 function ict_declare_ajaxurl() {
 	WfHtml::wf_render('ajax_url',[]);
 }
+
+function ict_create_tables(){
+    ict_create_projects_table();
+    ict_create_team_table();
+}
+
+function ict_create_projects_table(){
+    $model = new WfModel();
+    $projects_table = 'CREATE TABLE IF NOT EXISTS `wp_ict_projects` (
+  `project_id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_name` varchar(65) DEFAULT NULL,
+  `project_url` varchar(65) DEFAULT NULL,
+  `type` varchar(65) DEFAULT NULL,
+  `client` varchar(65) DEFAULT NULL,
+  `team` varchar(65) DEFAULT NULL,
+  `start_date` date DEFAULT NULL,
+  `end_date` date DEFAULT NULL,
+  `ref_url` varchar(65) DEFAULT NULL,
+  `published` int(11) DEFAULT NULL,
+  PRIMARY KEY (`project_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;';
+    $model->db()->query($projects_table);
+}
+
+function ict_create_team_table(){
+    $model = new WfModel();
+    $team_table = 'CREATE TABLE IF NOT EXISTS `wp_ict_teams` (
+  `team_id` int(11) NOT NULL AUTO_INCREMENT,
+  `project_id` int(11) DEFAULT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `team_name` varchar(65) DEFAULT NULL,
+  `description` longtext,
+  `contact` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  `position` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`team_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;';
+    $model->db()->query($team_table);
+}
+
 
 // Create a admin menu for projects.
 function ict_projects_admin_menu(){
