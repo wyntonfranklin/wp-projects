@@ -1,0 +1,26 @@
+.white-popup-block {
+    background: #FFF;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 650px;
+    margin: 40px auto;
+    position: relative;
+}
+
+.white-popup-header {
+    margin-bottom:7px;
+    border-bottom: 1px solid #DDDDDD;
+    padding: 7px 5px 5px 10px;
+}
+
+.white-popup-header h1{
+    margin-bottom: 0;
+}
+
+.show-popup{
+    display: block;
+}
+
+.no-show-popup{
+    display: none;
+}

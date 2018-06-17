@@ -1,0 +1,116 @@
+<?php
+WfHtml::wf_registerStyle('calender-picker-style', plugins_url( '/public/css/jquery.datetimepicker.css', __DIR__ ),
+    '1.1');
+WfHtml::wf_registerScript('calendar-picker',
+    plugins_url( '/public/js/jquery.datetimepicker.full.js', __DIR__ ),'1.0');
+?>
+<div class="wrap">
+    <h1>Edit Project</h1><br>
+    <a class="page-title-action" href="<?php echo WfHtml::getPageUrl('ict-projects-main-page');?>">Back To Projects</a>
+    <a class="page-title-action" href="<?php echo WfHtml::adminUrl('ict-project-team-members',[
+        'id'=>$project['project_id']
+    ])?>">View Team</a>
+    <br><br>
+    <?php if(isset($_GET['message']) && $_GET['message'] == '1'):?>
+        <div id="message" class="updated fade">
+            <p><strong>Settings Saved</strong></p>
+        </div>
+    <?php endif;?>
+
+    <?php WfHtml::wf_beginForm('post',WfHtml::adminUrl('ict-edit-project-page',[
+        'id'=>$project['project_id']
+    ]),'ict-projects-settings');?>
+
+    <table class="form-table">
+        <tbody>
+        <tr>
+            <th><label>Project Name</label></th>
+            <td><?php echo WfHtml::wf_text_input('project_name',  esc_html($project['project_name']),array(
+                    'style'=>'width:60%;',
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Project Link</label></th>
+            <td><?php echo WfHtml::wf_text_input('project_url',  esc_html($project['project_url']),array(
+                    'style'=>'width:60%;'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Type of Project</label></th>
+            <td><?php echo WfHtml::wf_dropDownBox('project_type',  esc_html($project['type']),[
+                    "Consultancy" => "Consultancy",
+                    "Training" => "Training",
+                    "Cloud Platform" => "Cloud Platform",
+                    "Website Development" => "Website Development",
+                    "Network Infrastructure" => "Network Infrastructure",
+                    "Design &amp; Installation" => "Design &amp; Installation"
+                ],array(
+                    'style'=>'width:60%;'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Client</label></th>
+            <td><?php echo WfHtml::wf_text_input('project_client',  esc_html($project['client']),array(
+                    'style'=>'width:60%;'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Start Date</label></th>
+            <td><?php echo WfHtml::wf_text_input('start_date',  esc_html($project['start_date']),array(
+                    'style'=>'width:60%;',
+                    'id' => 'start_date'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>End Date</label></th>
+            <td><?php echo WfHtml::wf_text_input('end_date',  esc_html($project['end_date']),array(
+                    'style'=>'width:60%;',
+                    'id' => 'end_date'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Reference</label></th>
+            <td><?php echo WfHtml::wf_text_input('ref_url',  esc_html($project['ref_url']),array(
+                    'style'=>'width:60%;'
+                ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Published</label></th>
+            <td><?php echo WfHtml::wf_checkBox('published',  esc_html($project['published']),array(
+                ));?></td>
+        </tr>
+
+
+        </tbody>
+
+    </table>
+    <?php echo WfHtml::wf_submitButton('ict_projects_update_submit','Update Project');?>
+
+    <?php WfHtml::wf_endForm();?>
+</div>
+
+<script>
+    jQuery(function($){
+        $('#start_date').datetimepicker({
+            timepicker:false,
+            format:'Y-m-d',
+            scrollMonth : false,
+            scrollInput : false,
+        });
+
+        $('#end_date').datetimepicker({
+            timepicker:false,
+            format:'Y-m-d',
+            scrollMonth : false,
+            scrollInput : false,
+        });
+
+    });
+</script>
