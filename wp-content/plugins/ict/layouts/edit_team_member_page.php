@@ -1,7 +1,7 @@
 <div class="wrap">
     <h1>Edit Team Member</h1><br>
-        <a class="page-title-action" href="<?php echo WfHtml::getPageUrl('ict-projects-teams-page');?>">Back To Teams</a>
-        <a class="page-title-action" href="<?php echo WfHtml::adminUrl('ict-project-team-members',[
+        <a class="page-title-action" href="<?php echo PJHtml::getPageUrl('ict-projects-teams-page');?>">Back To Teams</a>
+        <a class="page-title-action" href="<?php echo PJHtml::adminUrl('ict-project-team-members',[
             'id'=>$team['project_id']
         ])?>">View Project Team</a>
     <br><br>
@@ -11,7 +11,7 @@
         </div>
     <?php endif;?>
 
-    <?php WfHtml::wf_beginForm('post',WfHtml::adminUrl('ict-edit-team-member-page',[
+    <?php PJHtml::wf_beginForm('post',PJHtml::adminUrl('ict-edit-team-member-page',[
         'id'=>$team['team_id']
     ]),'xhuma-projects-settings');?>
 
@@ -19,14 +19,14 @@
         <tbody>
         <tr>
             <th><label>Title</label></th>
-            <td><?php echo WfHtml::wf_text_input('title',  esc_html($team['title']),array(
+            <td><?php echo PJHtml::wf_text_input('title',  esc_html($team['title']),array(
                     'style'=>'width:60%;',
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Team Member Name</label></th>
-            <td><?php echo WfHtml::wf_text_input('name',  esc_html($team['team_name']),array(
+            <td><?php echo PJHtml::wf_text_input('name',  esc_html($team['team_name']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
@@ -34,21 +34,21 @@
         <tr>
             <th><label>Project</label></th>
             <?php
-            $projects = new WfModel('wp_ict_projects');
+            $projects = new PJModel('wp_ict_projects');
             $projects = $projects->findAll();
             $data = null;
             foreach($projects as $project){
                 $data[$project["project_id"]] = $project["project_name"];
             }
             ?>
-            <td><?php echo WfHtml::wf_dropDownBox('project',  esc_html($team['project_id']), $data, array(
+            <td><?php echo PJHtml::wf_dropDownBox('project',  esc_html($team['project_id']), $data, array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Description</label></th>
-            <td><?php echo WfHtml::wf_textArea('description',  esc_html($team['description']),array(
+            <td><?php echo PJHtml::wf_textArea('description',  esc_html($team['description']),array(
                     'style'=>'width:60%;' ,'rows'=>'15'
                 ));?></td>
         </tr>
@@ -56,7 +56,7 @@
 
         <tr>
             <th><label>Position</label></th>
-            <td><?php echo WfHtml::wf_text_input('position',  esc_html($team['position']),array(
+            <td><?php echo PJHtml::wf_text_input('position',  esc_html($team['position']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
@@ -64,14 +64,14 @@
 
         <tr>
             <th><label>Contact</label></th>
-            <td><?php echo WfHtml::wf_text_input('contact',  esc_html($team['contact']),array(
+            <td><?php echo PJHtml::wf_text_input('contact',  esc_html($team['contact']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Email</label></th>
-            <td><?php echo WfHtml::wf_text_input('email',  esc_html($team['email']),array(
+            <td><?php echo PJHtml::wf_text_input('email',  esc_html($team['email']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
@@ -81,7 +81,7 @@
         </tbody>
 
     </table>
-    <?php echo WfHtml::wf_submitButton('ict_teams_update_submit');?>
+    <?php echo PJHtml::wf_submitButton('ict_teams_update_submit');?>
 
-    <?php WfHtml::wf_endForm();?>
+    <?php PJHtml::wf_endForm();?>
 </div>

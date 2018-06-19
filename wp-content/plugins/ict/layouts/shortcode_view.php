@@ -1,11 +1,11 @@
 <?php
-WfHtml::wf_registerStyle('general-style',plugins_url( '/public/css/ict-projects.css', __DIR__ ),
+PJHtml::wf_registerStyle('general-style',plugins_url( '/public/css/ict-projects.css', __DIR__ ),
     '1.1');
-WfHtml::wf_registerStyle('data-table-css', plugins_url( '/public/DataTables/datatables.css', __DIR__ ),
+PJHtml::wf_registerStyle('data-table-css', plugins_url( '/public/DataTables/datatables.css', __DIR__ ),
     '1.1');
-WfHtml::wf_registerScript('data-table-js',
+PJHtml::wf_registerScript('data-table-js',
     plugins_url( '/public/DataTables/datatables.js', __DIR__ ),'1.0');
-WfHtml::wf_registerStyle('modal-style',plugins_url( '/public/css/magnific-popup.css', __DIR__ ),
+PJHtml::wf_registerStyle('modal-style',plugins_url( '/public/css/magnific-popup.css', __DIR__ ),
     '1.1');
 wp_enqueue_script('modal',
     plugins_url( '/public/js/jquery.magnific-popup.min.js', __DIR__ ),
@@ -31,12 +31,15 @@ wp_enqueue_script('modal',
         <tbody>
         <?php foreach( $projects as $project ):?>
         <tr>
-            <td><?php echo $project["project_name"];?></td>
+            <td><a href="#" class="proj-desc">
+                    <?php echo $project["project_name"];?>
+                </a>
+            </td>
             <td><?php echo $project["type"];?></td>
             <td><?php echo $project["client"];?></td>
             <?php
 
-            $teamDb = new WfModel('wp_ict_teams');
+            $teamDb = new PJModel('wp_ict_teams');
             $teamCount = $teamDb->getCount('WHERE project_id='.$project['project_id'])
 
             ?>
@@ -54,14 +57,9 @@ wp_enqueue_script('modal',
 
 <div class="white-popup-block no-show-popup" id="modal-popup">
     <div class="white-popup-header">
-        <h3 id="md-title">Project Title</h3>
-    </div>
-    <div style="margin-bottom: 10px;">
-        <p><b>Client:</b> asdfomfe</p>
-        <p><b>Project Type:</b> asfomsdf</p>
+        <h3 id="md-title">Team Members</h3>
     </div>
     <div>
-        <h3>Team Members</h3>
         <table class="table table-user-information">
             <tbody>
             <tr>
@@ -88,9 +86,35 @@ wp_enqueue_script('modal',
     <button title="Close" type="button" class="mfp-close">&#215;</button>
 </div>
 
+<div class="white-popup-block no-show-popup" id="project-popup">
+    <div class="white-popup-header">
+        <h3 id="md-title">Project Name</h3>
+    </div>
+    <div>
+        <h4>Description</h4>
+        <table class="table table-user-information">
+            <tbody>
+            <tr>
+                <td>
+                    <div>
+                        In reasonable compliment favourable is connection dispatched in terminated.
+                        Do esteem object we called father excuse remove. So dear real on like more it.
+                        Laughing for two families addition expenses surprise the.
+                        If sincerity he to curiosity arranging. Learn taken terms be as.
+                        Scarcely mrs produced too removing new old
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <button title="Close" type="button" class="mfp-close">&#215;</button>
+</div>
+
 <script>
     jQuery(function($){
         var el = $('#modal-popup');
+        var pj = $('#project-popup');
         $(document).ready( function () {
             var jTable = $('#ict-projects-table').DataTable();
         } );
@@ -101,6 +125,18 @@ wp_enqueue_script('modal',
             jQuery.magnificPopup.open({
                 items: {
                     src: '#modal-popup',
+                    type: 'inline'
+                }
+            });
+            return false;
+        });
+
+        $('.proj-desc').on('click',function(){
+            pj.removeClass('no-show-popup');
+            pj.addClass('show-popup');
+            jQuery.magnificPopup.open({
+                items: {
+                    src: '#project-popup',
                     type: 'inline'
                 }
             });

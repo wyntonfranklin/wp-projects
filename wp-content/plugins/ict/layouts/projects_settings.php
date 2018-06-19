@@ -15,7 +15,7 @@
 		</div>
 	<?php endif;?>
 
-	<?php WfHtml::wf_beginForm('post',WfHtml::wf_getPageUrl('xhuma-projects-main-page'),'xhuma-projects-settings');?>
+	<?php PJHtml::wf_beginForm('post',PJHtml::wf_getPageUrl('xhuma-projects-main-page'),'xhuma-projects-settings');?>
 
 	<table class="form-table">
 		<tbody>
@@ -29,14 +29,14 @@
         </tr>
 		<tr>
 			<th><label>Api Url</label></th>
-			<td><?php echo WfHtml::wf_text_input('api_url',  esc_html($options['api_url']),array(
+			<td><?php echo PJHtml::wf_text_input('api_url',  esc_html($options['api_url']),array(
 					'style'=>'width:60%;'
 				));?></td>
 		</tr>
 		</tbody>
 
 	</table>
-	<?php echo WfHtml::wf_submitButton();?>
+	<?php echo PJHtml::wf_submitButton();?>
 
-	<?php WfHtml::wf_endForm();?>
+	<?php PJHtml::wf_endForm();?>
 </div>

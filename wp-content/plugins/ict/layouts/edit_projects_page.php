@@ -1,13 +1,17 @@
 <?php
-WfHtml::wf_registerStyle('calender-picker-style', plugins_url( '/public/css/jquery.datetimepicker.css', __DIR__ ),
+PJHtml::wf_registerStyle('calender-picker-style', plugins_url( '/public/css/jquery.datetimepicker.css', __DIR__ ),
     '1.1');
-WfHtml::wf_registerScript('calendar-picker',
+PJHtml::wf_registerStyle('editor-style', plugins_url( '/public/css/trumbowyg.min.css', __DIR__ ),
+    '1.1');
+PJHtml::wf_registerScript('calendar-picker',
     plugins_url( '/public/js/jquery.datetimepicker.full.js', __DIR__ ),'1.0');
+PJHtml::wf_registerScript('editor-trumb',
+    plugins_url( '/public/js/trumbowyg.min.js', __DIR__ ),'1.0');
 ?>
 <div class="wrap">
     <h1>Edit Project</h1><br>
-    <a class="page-title-action" href="<?php echo WfHtml::getPageUrl('ict-projects-main-page');?>">Back To Projects</a>
-    <a class="page-title-action" href="<?php echo WfHtml::adminUrl('ict-project-team-members',[
+    <a class="page-title-action" href="<?php echo PJHtml::getPageUrl('ict-projects-main-page');?>">Back To Projects</a>
+    <a class="page-title-action" href="<?php echo PJHtml::adminUrl('ict-project-team-members',[
         'id'=>$project['project_id']
     ])?>">View Team</a>
     <br><br>
@@ -17,7 +21,7 @@ WfHtml::wf_registerScript('calendar-picker',
         </div>
     <?php endif;?>
 
-    <?php WfHtml::wf_beginForm('post',WfHtml::adminUrl('ict-edit-project-page',[
+    <?php PJHtml::wf_beginForm('post',PJHtml::adminUrl('ict-edit-project-page',[
         'id'=>$project['project_id']
     ]),'ict-projects-settings');?>
 
@@ -25,21 +29,28 @@ WfHtml::wf_registerScript('calendar-picker',
         <tbody>
         <tr>
             <th><label>Project Name</label></th>
-            <td><?php echo WfHtml::wf_text_input('project_name',  esc_html($project['project_name']),array(
+            <td><?php echo PJHtml::wf_text_input('project_name',  esc_html($project['project_name']),array(
                     'style'=>'width:60%;',
                 ));?></td>
         </tr>
 
+
         <tr>
-            <th><label>Project Link</label></th>
-            <td><?php echo WfHtml::wf_text_input('project_url',  esc_html($project['project_url']),array(
-                    'style'=>'width:60%;'
-                ));?></td>
+            <th><label>Project Description</label></th>
+            <td>
+                <div style="width:60%;">
+                    <?php echo PJHtml::wf_textArea('project_description', esc_html($project['project_description']),array(
+                        'id' => 'editor',
+                        'rows'=>'9',
+                        'style'=>'width:60%;',
+                    ));?>
+                </div>
+            </td>
         </tr>
 
         <tr>
             <th><label>Type of Project</label></th>
-            <td><?php echo WfHtml::wf_dropDownBox('project_type',  esc_html($project['type']),[
+            <td><?php echo PJHtml::wf_dropDownBox('project_type',  esc_html($project['type']),[
                     "Consultancy" => "Consultancy",
                     "Training" => "Training",
                     "Cloud Platform" => "Cloud Platform",
@@ -53,14 +64,14 @@ WfHtml::wf_registerScript('calendar-picker',
 
         <tr>
             <th><label>Client</label></th>
-            <td><?php echo WfHtml::wf_text_input('project_client',  esc_html($project['client']),array(
+            <td><?php echo PJHtml::wf_text_input('project_client',  esc_html($project['client']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Start Date</label></th>
-            <td><?php echo WfHtml::wf_text_input('start_date',  esc_html($project['start_date']),array(
+            <td><?php echo PJHtml::wf_text_input('start_date',  esc_html($project['start_date']),array(
                     'style'=>'width:60%;',
                     'id' => 'start_date'
                 ));?></td>
@@ -68,7 +79,7 @@ WfHtml::wf_registerScript('calendar-picker',
 
         <tr>
             <th><label>End Date</label></th>
-            <td><?php echo WfHtml::wf_text_input('end_date',  esc_html($project['end_date']),array(
+            <td><?php echo PJHtml::wf_text_input('end_date',  esc_html($project['end_date']),array(
                     'style'=>'width:60%;',
                     'id' => 'end_date'
                 ));?></td>
@@ -76,14 +87,14 @@ WfHtml::wf_registerScript('calendar-picker',
 
         <tr>
             <th><label>Reference</label></th>
-            <td><?php echo WfHtml::wf_text_input('ref_url',  esc_html($project['ref_url']),array(
+            <td><?php echo PJHtml::wf_text_input('ref_url',  esc_html($project['ref_url']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Published</label></th>
-            <td><?php echo WfHtml::wf_checkBox('published',  esc_html($project['published']),array(
+            <td><?php echo PJHtml::wf_checkBox('published',  esc_html($project['published']),array(
                 ));?></td>
         </tr>
 
@@ -91,9 +102,9 @@ WfHtml::wf_registerScript('calendar-picker',
         </tbody>
 
     </table>
-    <?php echo WfHtml::wf_submitButton('ict_projects_update_submit','Update Project');?>
+    <?php echo PJHtml::wf_submitButton('ict_projects_update_submit','Update Project');?>
 
-    <?php WfHtml::wf_endForm();?>
+    <?php PJHtml::wf_endForm();?>
 </div>
 
 <script>
@@ -111,6 +122,15 @@ WfHtml::wf_registerScript('calendar-picker',
             scrollMonth : false,
             scrollInput : false,
         });
+
+        $('#editor').trumbowyg({
+            svgPath: false,
+            btns: [
+                ['bold', 'italic'],
+                ['link'],
+            ]
+        });
+
 
     });
 </script>

@@ -9,7 +9,7 @@
  * Layouts are expected to be a the layouts folder relative to the plugin main directory
  */
 
-class WfHtml {
+class PJHtml {
 
 	function __construct() {
 

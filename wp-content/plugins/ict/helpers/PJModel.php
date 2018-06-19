@@ -6,7 +6,7 @@
  * Time: 8:51 PM
  */
 
-class WfModel {
+class PJModel {
 
     private $_db;
     private $_table;
