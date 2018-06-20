@@ -20,8 +20,8 @@
 	<table class="form-table">
 		<tbody>
         <tr>
-            <th><label>Projects ShortCode</label></th>
-            <td><span>[ShortCode Id]</span></td>
+            <th><label>ShortCode [Basic]</label></th>
+            <td><span>[ict-projects]</span></td>
         </tr>
         <tr>
             <th><label>Projects Attributes</label></th>

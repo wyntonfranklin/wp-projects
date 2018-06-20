@@ -24,3 +24,47 @@
 .no-show-popup{
     display: none;
 }
+
+.project-team-table {
+    border: none!important;
+    border-collapse: collapse!important;
+}
+
+.project-team-table th {
+    font-weight: bold!important;
+    border: 1px solid #CCC!important;
+    padding: 5px 10px!important;
+    background: #fff!important;
+}
+
+.project-team-table td {
+    border: 1px solid #CCC!important;
+    padding: 5px 10px!important;
+    background: #fff!important;
+}
+
+.ict-project-table-container{
+    margin-bottom: 20px;
+    background: #f7f7f7;
+    padding: 20px;
+}
+
+.ict-projects-table{
+    margin-top: 10px!important;
+    background: #fff!important;
+}
+
+.ict-projects-table th {
+    background: #fff!important;
+    font-weight: bold!important;
+    border: 1px solid #CCC!important;
+    padding: 7px!important;
+    color:#000!important;
+}
+
+.ict-projects-table td {
+    background: #fff!important;
+    font-weight: normal!important;
+    border: 1px solid #CCC!important;
+    padding: 5px 5px!important;
+}

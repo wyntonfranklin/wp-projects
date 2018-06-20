@@ -12,26 +12,32 @@ wp_enqueue_script('modal',
     array( 'jquery' ),
     '1.0'
 );
+wp_enqueue_script('short-code-script',
+	plugins_url( '/public/js/ict_projects.js', __DIR__ ),
+	array( 'jquery' ),
+	'1.0'
+);
 ?>
-<h1>ShortCode Title</h1>
 
-<div class="ict-project-table">
-    <table id="ict-projects-table" class="display wp-list-table widefat fixed">
+<!--<h1>ShortCode Title</h1> -->
+
+<div class="ict-project-table-container">
+    <table id="ict-projects-table" class="ict-projects-table">
         <thead>
         <tr>
-            <td>Project Name</td>
-            <td>Type of Project</td>
-            <td>Client</td>
-            <td>Project Team</td>
-            <td>Start Date</td>
-            <td>End Date</td>
-            <td>Reference</td>
+            <th>Project Name</th>
+            <th>Type of Project</th>
+            <th>Client</th>
+            <th>Project Team</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Reference</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach( $projects as $project ):?>
         <tr>
-            <td><a href="#" class="proj-desc">
+            <td><a href="#" class="proj-desc" data-project="<?php echo $project['project_id'];?>">
                     <?php echo $project["project_name"];?>
                 </a>
             </td>
@@ -43,7 +49,10 @@ wp_enqueue_script('modal',
             $teamCount = $teamDb->getCount('WHERE project_id='.$project['project_id'])
 
             ?>
-            <td><a href="#" class="view-team">View (<?php echo $teamCount;?>)</a></td>
+            <td>
+                <a data-id="<?php echo $project['project_id'];?>" data-project="<?php echo $project['project_name'];?>" href="#" class="view-team">
+                    View (<?php echo $teamCount;?>)</a>
+            </td>
             <td><?php echo $project["start_date"];?></td>
             <td><?php echo $project["end_date"];?></td>
             <td><a target="_blank" href="<?php echo $project['ref_url'];?>">
@@ -57,91 +66,35 @@ wp_enqueue_script('modal',
 
 <div class="white-popup-block no-show-popup" id="modal-popup">
     <div class="white-popup-header">
-        <h3 id="md-title">Team Members</h3>
+        <h3 id="team-title">Project Name</h3>
     </div>
     <div>
-        <table class="table table-user-information">
-            <tbody>
+        <table class="project-team-table" style="width: 100%; margin-top:20px; margin-bottom: 50px;">
+            <thead>
+                <tr>
+                    <th>Team Member</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="teams-content">
             <tr>
-                <td>Team Members</td>
-                <td><span>Description of the project of the team members</span></td>
-            </tr>
-            <tr>
-                <td>Team Members</td>
-                <td><span>Description of the project of the team members</span></td>
-            </tr>
-            <tr>
-                <td>Team Members</td>
-                <td><span>In reasonable compliment favourable is connection dispatched in terminated.
-                        Do esteem object we called father excuse remove. So dear real on like more it.
-                        Laughing for two families addition expenses surprise the.
-                        If sincerity he to curiosity arranging. Learn taken terms be as.
-                        Scarcely mrs produced too removing new old
-                    </span>
-                </td>
+                <td colspan="2">Loading Content...</td>
             </tr>
             </tbody>
         </table>
     </div>
-    <button title="Close" type="button" class="mfp-close">&#215;</button>
+    <button title="Close" type="button" class="mfp-close" style="color: #333!important;">&#215;</button>
 </div>
 
 <div class="white-popup-block no-show-popup" id="project-popup">
     <div class="white-popup-header">
-        <h3 id="md-title">Project Name</h3>
+        <h3 id="project-title">Project Name</h3>
     </div>
     <div>
-        <h4>Description</h4>
-        <table class="table table-user-information">
-            <tbody>
-            <tr>
-                <td>
-                    <div>
-                        In reasonable compliment favourable is connection dispatched in terminated.
-                        Do esteem object we called father excuse remove. So dear real on like more it.
-                        Laughing for two families addition expenses surprise the.
-                        If sincerity he to curiosity arranging. Learn taken terms be as.
-                        Scarcely mrs produced too removing new old
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h4>Overview</h4>
+        <div id="project-description" style="margin-bottom: 30px;">
+            <span>Loading Content...</span>
+        </div>
     </div>
-    <button title="Close" type="button" class="mfp-close">&#215;</button>
+    <button title="Close" type="button" class="mfp-close" style="color: #333!important;">&#215;</button>
 </div>
-
-<script>
-    jQuery(function($){
-        var el = $('#modal-popup');
-        var pj = $('#project-popup');
-        $(document).ready( function () {
-            var jTable = $('#ict-projects-table').DataTable();
-        } );
-
-        $('.view-team').on('click',function(){
-            el.removeClass('no-show-popup');
-            el.addClass('show-popup');
-            jQuery.magnificPopup.open({
-                items: {
-                    src: '#modal-popup',
-                    type: 'inline'
-                }
-            });
-            return false;
-        });
-
-        $('.proj-desc').on('click',function(){
-            pj.removeClass('no-show-popup');
-            pj.addClass('show-popup');
-            jQuery.magnificPopup.open({
-                items: {
-                    src: '#project-popup',
-                    type: 'inline'
-                }
-            });
-            return false;
-        });
-
-    });
-</script>

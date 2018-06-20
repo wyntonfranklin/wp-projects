@@ -50,14 +50,15 @@ PJHtml::wf_registerScript('editor-trumb',
 
         <tr>
             <th><label>Type of Project</label></th>
-            <td><?php echo PJHtml::wf_dropDownBox('project_type',  esc_html($project['type']),[
-                    "Consultancy" => "Consultancy",
-                    "Training" => "Training",
-                    "Cloud Platform" => "Cloud Platform",
-                    "Website Development" => "Website Development",
-                    "Network Infrastructure" => "Network Infrastructure",
-                    "Design &amp; Installation" => "Design &amp; Installation"
-                ],array(
+	        <?php
+	        $pModel = new PJModel('wp_ict_project_types');
+	        $types = $pModel->findAll();
+	        $typesData = array();
+	        foreach($types as $type){
+		        $typesData[$type['project_type']] = $type['project_type'];
+	        }
+	        ?>
+            <td><?php echo PJHtml::wf_dropDownBox('project_type',  esc_html($project['type']), $typesData,array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>

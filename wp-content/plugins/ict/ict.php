@@ -38,6 +38,8 @@ add_action( 'wp_head', 'ict_declare_ajaxurl' );
 function ict_init(){
 	add_action('wp_ajax_nopriv_ict_ajax_projects', 'ict_ajax_projects');
 	add_action('wp_ajax_ict_ajax_projects', 'ict_ajax_projects' );
+	add_action('wp_ajax_nopriv_ict_ajax_teams', 'ict_ajax_teams');
+	add_action('wp_ajax_ict_ajax_teams', 'ict_ajax_teams' );
 	add_action('admin_menu','ict_projects_admin_menu');
     add_shortcode( 'ict-projects','ict_project_short_code_view');
 
@@ -46,65 +48,48 @@ function ict_init(){
 add_action('init', 'ict_init');
 
 
-// display the experience table
-function ict_display_experience_table( $atts = [], $content = null, $tag = '' ){
-	ict_register_experience_table_scripts();
-	return PJHtml::wf_render('ict_table_view',[],false);
-}
-
-// register scripts for experience table
-function ict_register_experience_table_scripts(){
-	PJHtml::wf_registerStyle('modal-style',plugins_url( '/public/css/magnific-popup.css', __FILE__ ),
-		'1.1');
-	PJHtml::wf_registerStyle('general-style',plugins_url( '/public/css/ict.css', __FILE__ ),
-		'1.1');
-	PJHtml::wf_registerScript('angular',
-		plugins_url( '/public/js/angular.min.js', __FILE__ ),'1.0');
-	wp_enqueue_script('modal',
-		plugins_url( '/public/js/jquery.magnific-popup.min.js', __FILE__ ),
-		array( 'jquery' ),
-		'1.0'
-	);
-	wp_enqueue_script('experience-table',
-		plugins_url( '/public/js/experience-table.js', __FILE__ ),
-		array( 'jquery' ),
-		'1.0'
-	);
-}
 
 // Call the api and return the data
 function ict_ajax_projects(){
-	$data = ict_apiRequest( ict_get_api_url() );
-	$limit = count($data["results"]);
-	$events = array();
+	$model = new PJModel('wp_ict_projects');
+	$project = $model->findByPk('project_id',$_POST['projId']);
 
-	for($i=0; $i<= $limit-1; $i++) {
-		$events[] = $data["results"][$i]["events"];
+	ict_ajaxCompleteMessage('success','done',array(
+		'title' => $project['project_name'],
+		'content' => $project['project_description']
+	));
+	exit();
+}
+
+function ict_ajax_teams(){
+	$model = new PJModel('wp_ict_teams');
+	$teams = $model->findAll('WHERE project_id='.$_POST['id']);
+	$o = '';
+	foreach($teams as $team){
+		$o .= '<tr>
+                <td>'.$team['team_name'].'</td>
+                <td><span>'.$team['description'].'</span></td>
+            </tr>';
 	}
-
-	echo json_encode($events);
-
+	if( $o === '' ){
+		$o .= '<tr>
+                <td colspan="2">No content available</td>
+            </tr>';
+	}
+	ict_ajaxCompleteMessage('success','done',array(
+		'content' => $o,
+	));
 	exit();
 }
 
 
-// Api request function
-function ict_apiRequest($url){
-
-	$request = wp_remote_get($url);
-
-	if( is_wp_error( $request ) ) {
-		echo $request->get_error_message(); // Bail early
-	}
-
-	$body = wp_remote_retrieve_body( $request );
-
-	$data = json_decode( $body ,true);
-
-	if( ! empty( $data ) ) {
-		return $data;
-	}
+function ict_ajaxCompleteMessage($type, $msg, array $params=array())
+{
+	echo json_encode(array(
+		$type => array_merge(array( 'msg' => $msg), $params),
+	));
 }
+
 
 
 // function to render the ajax script. Find in layouts folder
