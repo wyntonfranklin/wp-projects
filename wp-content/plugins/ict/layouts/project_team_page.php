@@ -22,14 +22,14 @@ PJHtml::wf_registerScript('data-table-js',
         </tr>
         </thead>
         <tbody>
+        <?php $tableRow = 1;?>
         <?php foreach( $teams as $team):?>
-            <tr>
-                <?php
-                $projectTable = new PJModel('wp_ict_projects');
-                $project = $projectTable->findByPk('project_id',$team['project_id']);
-
-                ?>
-                <td><?php echo $team['team_id'];?></td>
+	        <?php
+	        $projectTable = new PJModel('wp_ict_projects');
+	        $project = $projectTable->findByPk('project_id',$team['project_id']);
+	        ?>
+            <tr data-team="<?php echo $team['team_id'];?>">
+                <td><?php echo $tableRow;?></td>
                 <td><a href="<?php echo PJHtml::adminUrl('ict-edit-team-member-page',[
                         'id'=>$team['team_id']
                     ]);?>">
@@ -46,7 +46,7 @@ PJHtml::wf_registerScript('data-table-js',
                 <td><?php echo PJHtml::wf_limitText($team['description'], 10);?></td>
                 <td><?php echo $team['position'];?></td>
             </tr>
-
+        <?php $tableRow++ ;?>
         <?php endforeach;?>
         </tbody>
 
@@ -55,7 +55,28 @@ PJHtml::wf_registerScript('data-table-js',
 <script>
     jQuery(function($){
         $(document).ready( function () {
-            var jTable = $('#table_teams').DataTable({ "order": []});
+            var jTable = $('#table_teams').DataTable({
+                rowReorder: true
+            });
+
+            jTable.on( 'row-reorder', function ( e, diff, edit ) {
+                var updateOld =[];
+                var updateNew =[];
+                for ( var i=0, ien=diff.length ; i<ien ; i++ ) {
+                    var row = jTable.row( diff[i].node ).node();
+                    var teamId = row.getAttribute("data-team");
+                    updateOld.push(teamId);
+                    updateNew.push(diff[i].newData);
+                }
+                sendReOrderData(updateOld, updateNew);
+            } );
+
+            var sendReOrderData = function(oldPositions, newPositions){
+                $.post("<?php echo admin_url( 'admin-ajax.php' ); ?>",{action:"ict_ajax_reorder_teams","rOld[]":oldPositions,"rNew[]":newPositions},function(data){
+                });
+            };
+
         } );
+
     })
 </script>

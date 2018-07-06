@@ -40,6 +40,7 @@ function ict_init(){
 	add_action('wp_ajax_ict_ajax_projects', 'ict_ajax_projects' );
 	add_action('wp_ajax_nopriv_ict_ajax_teams', 'ict_ajax_teams');
 	add_action('wp_ajax_ict_ajax_teams', 'ict_ajax_teams' );
+	add_action('wp_ajax_ict_ajax_reorder_teams', 'ict_ajax_reorder_teams' );
 	add_action('admin_menu','ict_projects_admin_menu');
     add_shortcode( 'ict-projects','ict_project_short_code_view');
 
@@ -63,7 +64,7 @@ function ict_ajax_projects(){
 
 function ict_ajax_teams(){
 	$model = new PJModel('wp_ict_teams');
-	$teams = $model->findAll('WHERE project_id='.$_POST['id']);
+	$teams = $model->findAll('WHERE project_id='.$_POST['id'] . ' order by team_order = 0, team_order');
 	$o = '';
 	foreach($teams as $team){
 		$o .= '<tr>
@@ -80,6 +81,29 @@ function ict_ajax_teams(){
 		'content' => $o,
 	));
 	exit();
+}
+
+function ict_ajax_reorder_teams(){
+	$posValues = "";
+	if(isset($_POST['rNew']) && isset($_POST['rOld'])){
+		$oldValues = $_POST['rOld'];
+		$counter =0;
+		foreach($_POST['rNew'] as $pos ){
+			$posValues .= $pos ." =>";
+			$posValues .= $oldValues[$counter].",";
+			ict_update_team_order($oldValues[$counter], $pos);
+			$counter++;
+		}
+	}
+	echo $posValues;
+	exit();
+}
+
+function ict_update_team_order( $old_order, $new_order ){
+	$teamData = null;
+	$model = new PJModel('wp_ict_teams');
+	$teamData['team_order'] = $new_order;
+	$model->update($teamData,'team_id',$old_order);
 }
 
 
@@ -307,7 +331,7 @@ function ict_render_project_team_page(){
     $projTable = new PJModel('wp_ict_projects');
     $project = $projTable->findByPk('project_id',$_GET['id']);
     PJHtml::wf_render('project_team_page',[
-        'teams'=>$model->findAll('WHERE project_id='.$_GET['id']),
+        'teams'=>$model->findAll('WHERE project_id='.$_GET['id'].' order by team_order = 0, team_order'),
         'project' => $project
     ]);
 }
