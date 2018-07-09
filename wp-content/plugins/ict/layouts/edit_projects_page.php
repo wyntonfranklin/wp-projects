@@ -29,7 +29,7 @@ PJHtml::wf_registerScript('editor-trumb',
         <tbody>
         <tr>
             <th><label>Project Name</label></th>
-            <td><?php echo PJHtml::wf_text_input('project_name',  esc_html($project['project_name']),array(
+            <td><?php echo PJHtml::wf_text_input('project_name',  stripslashes($project['project_name']),array(
                     'style'=>'width:60%;',
                 ));?></td>
         </tr>
@@ -39,7 +39,7 @@ PJHtml::wf_registerScript('editor-trumb',
             <th><label>Project Description</label></th>
             <td>
                 <div style="width:60%;">
-                    <?php echo PJHtml::wf_textArea('project_description', esc_html($project['project_description']),array(
+                    <?php echo PJHtml::wf_textArea('project_description', stripslashes($project['project_description']),array(
                         'id' => 'editor',
                         'rows'=>'9',
                         'style'=>'width:60%;',
@@ -58,14 +58,14 @@ PJHtml::wf_registerScript('editor-trumb',
 		        $typesData[$type['project_type']] = $type['project_type'];
 	        }
 	        ?>
-            <td><?php echo PJHtml::wf_dropDownBox('project_type',  esc_html($project['type']), $typesData,array(
+            <td><?php echo PJHtml::wf_dropDownBox('project_type',  stripslashes($project['type']), $typesData,array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Client</label></th>
-            <td><?php echo PJHtml::wf_text_input('project_client',  esc_html($project['client']),array(
+            <td><?php echo PJHtml::wf_text_input('project_client',  stripslashes($project['client']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>

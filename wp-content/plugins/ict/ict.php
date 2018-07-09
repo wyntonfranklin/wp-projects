@@ -56,8 +56,8 @@ function ict_ajax_projects(){
 	$project = $model->findByPk('project_id',$_POST['projId']);
 
 	ict_ajaxCompleteMessage('success','done',array(
-		'title' => $project['project_name'],
-		'content' => $project['project_description']
+		'title' => stripslashes($project['project_name']),
+		'content' => stripslashes($project['project_description'])
 	));
 	exit();
 }
@@ -68,8 +68,8 @@ function ict_ajax_teams(){
 	$o = '';
 	foreach($teams as $team){
 		$o .= '<tr>
-                <td>'.$team['team_name'].'</td>
-                <td><span>'.$team['description'].'</span></td>
+                <td>'.stripslashes($team['team_name']).'</td>
+                <td><span>'.stripslashes($team['description']).'</span></td>
             </tr>';
 	}
 	if( $o === '' ){
@@ -156,6 +156,7 @@ function ict_create_team_table(){
   `contact` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `position` varchar(45) DEFAULT NULL,
+  `team_order` int(11) DEFAULT NULL,
   PRIMARY KEY (`team_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
     $model->db()->query($team_table);
@@ -342,9 +343,9 @@ function ict_render_new_project_team_member_page(){
     if(isset($_POST['ict_teams_submit'])){
         $model->insert(array(
             'project_id' => $_POST['project'],
-            'title' => $_POST['title'],
+            'title' => sanitize_text_field($_POST['title']),
             'team_name' => $_POST['name'],
-            'description' => $_POST['description'],
+            'description' => sanitize_text_field($_POST['description']),
             'contact' => $_POST['contact'],
             'email' => $_POST['email'],
             'position' => $_POST['position'],

@@ -5,7 +5,7 @@ PJHtml::wf_registerScript('data-table-js',
     plugins_url( '/public/DataTables/datatables.js', __DIR__ ),'1.0');
 ?>
 <div class="wrap">
-    <h1><?php echo $project['project_name'];?> Team Members</h1><br>
+    <h1><?php echo stripslashes($project['project_name']);?> Team Members</h1><br>
     <a class="page-title-action" href="<?php echo PJHtml::getPageUrl('ict-projects-main-page');?>">Back To Projects</a>
     <a class="page-title-action" href="<?php echo PJHtml::adminUrl('ict-new-project-team-member-page',[
         'id'=>$_GET['id'],
@@ -33,18 +33,18 @@ PJHtml::wf_registerScript('data-table-js',
                 <td><a href="<?php echo PJHtml::adminUrl('ict-edit-team-member-page',[
                         'id'=>$team['team_id']
                     ]);?>">
-                        <?php echo $team['title'] . ' '. $team['team_name'];?>
+                        <?php echo stripslashes($team['title']) . ' '. stripslashes($team['team_name']);?>
                     </a>
                 </td>
                 <td>
                     <a href="<?php echo PJHtml::adminUrl('ict-edit-project-page',[
                         'id'=>$project['project_id']
                     ]);?>">
-                        <?php echo $project['project_name'];?>
+                        <?php echo stripslashes($project['project_name']);?>
                     </a>
                 </td>
-                <td><?php echo PJHtml::wf_limitText($team['description'], 10);?></td>
-                <td><?php echo $team['position'];?></td>
+                <td><?php echo stripslashes(PJHtml::wf_limitText($team['description'], 10));?></td>
+                <td><?php echo stripslashes($team['position']);?></td>
             </tr>
         <?php $tableRow++ ;?>
         <?php endforeach;?>

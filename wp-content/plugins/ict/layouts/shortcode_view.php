@@ -38,11 +38,11 @@ wp_enqueue_script('short-code-script',
         <?php foreach( $projects as $project ):?>
         <tr>
             <td><a href="#" class="proj-desc" data-project="<?php echo $project['project_id'];?>">
-                    <?php echo $project["project_name"];?>
+                    <?php echo stripslashes($project["project_name"]);?>
                 </a>
             </td>
-            <td><?php echo $project["type"];?></td>
-            <td><?php echo $project["client"];?></td>
+            <td><?php echo stripslashes($project["type"]);?></td>
+            <td><?php echo stripslashes($project["client"]);?></td>
             <?php
 
             $teamDb = new PJModel('wp_ict_teams');
@@ -50,7 +50,7 @@ wp_enqueue_script('short-code-script',
 
             ?>
             <td>
-                <a data-id="<?php echo $project['project_id'];?>" data-project="<?php echo $project['project_name'];?>" href="#" class="view-team">
+                <a data-id="<?php echo $project['project_id'];?>" data-project="<?php echo stripslashes($project['project_name']);?>" href="#" class="view-team">
                     View (<?php echo $teamCount;?>)</a>
             </td>
             <td><?php echo $project["start_date"];?></td>

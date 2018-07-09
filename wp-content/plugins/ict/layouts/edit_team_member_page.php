@@ -19,14 +19,14 @@
         <tbody>
         <tr>
             <th><label>Title</label></th>
-            <td><?php echo PJHtml::wf_text_input('title',  esc_html($team['title']),array(
+            <td><?php echo PJHtml::wf_text_input('title',  stripslashes($team['title']),array(
                     'style'=>'width:60%;',
                 ));?></td>
         </tr>
 
         <tr>
             <th><label>Team Member Name</label></th>
-            <td><?php echo PJHtml::wf_text_input('name',  esc_html($team['team_name']),array(
+            <td><?php echo PJHtml::wf_text_input('name',  stripslashes($team['team_name']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>
@@ -38,7 +38,7 @@
             $projects = $projects->findAll();
             $data = null;
             foreach($projects as $project){
-                $data[$project["project_id"]] = $project["project_name"];
+                $data[$project["project_id"]] = stripslashes($project["project_name"]);
             }
             ?>
             <td><?php echo PJHtml::wf_dropDownBox('project',  esc_html($team['project_id']), $data, array(
@@ -48,7 +48,7 @@
 
         <tr>
             <th><label>Description</label></th>
-            <td><?php echo PJHtml::wf_textArea('description',  esc_html($team['description']),array(
+            <td><?php echo PJHtml::wf_textArea('description',  stripslashes($team['description']),array(
                     'style'=>'width:60%;' ,'rows'=>'15'
                 ));?></td>
         </tr>
@@ -56,7 +56,7 @@
 
         <tr>
             <th><label>Position</label></th>
-            <td><?php echo PJHtml::wf_text_input('position',  esc_html($team['position']),array(
+            <td><?php echo PJHtml::wf_text_input('position',  stripslashes($team['position']),array(
                     'style'=>'width:60%;'
                 ));?></td>
         </tr>

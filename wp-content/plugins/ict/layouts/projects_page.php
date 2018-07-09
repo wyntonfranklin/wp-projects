@@ -28,11 +28,11 @@ PJHtml::wf_registerScript('data-table-js',
             <td><a href="<?php echo PJHtml::adminUrl('ict-edit-project-page',[
                     'id'=>$project['project_id']
                 ]);?>">
-                    <?php echo $project['project_name'];?>
+                    <?php echo stripslashes($project['project_name']);?>
                 </a>
             </td>
             <td><?php echo $project['type'];?></td>
-            <td><?php echo $project['client'];?></td>
+            <td><?php echo stripslashes($project['client']);?></td>
             <?php
 
                 $teamDb = new PJModel('wp_ict_teams');
