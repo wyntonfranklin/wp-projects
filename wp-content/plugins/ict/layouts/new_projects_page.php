@@ -47,21 +47,21 @@ PJHtml::wf_registerScript('editor-trumb',
                     $typesData[$type['project_type']] = $type['project_type'];
                 }
             ?>
-			<td><?php echo PJHtml::wf_dropDownBox('project_type',  esc_html($options['api_url']),$typesData,array(
+			<td><?php echo PJHtml::wf_dropDownBox('project_type',  "",$typesData,array(
 					'style'=>'width:60%;'
 				));?></td>
 		</tr>
 
 		<tr>
 			<th><label>Client</label></th>
-			<td><?php echo PJHtml::wf_text_input('project_client',  esc_html($options['api_url']),array(
+			<td><?php echo PJHtml::wf_text_input('project_client',  "",array(
 					'style'=>'width:60%;'
 				));?></td>
 		</tr>
 
 		<tr>
 			<th><label>Start Date</label></th>
-			<td><?php echo PJHtml::wf_text_input('start_date',  esc_html($options['api_url']),array(
+			<td><?php echo PJHtml::wf_text_input('start_date',  "",array(
 					'style'=>'width:60%;',
 					'id' => 'start_date'
 				));?></td>
@@ -69,22 +69,28 @@ PJHtml::wf_registerScript('editor-trumb',
 
 		<tr>
 			<th><label>End Date</label></th>
-			<td><?php echo PJHtml::wf_text_input('end_date',  esc_html($options['api_url']),array(
+			<td><?php echo PJHtml::wf_text_input('end_date',  "",array(
 					'style'=>'width:60%;',
 					'id' => 'end_date'
 				));?></td>
 		</tr>
 
+        <tr>
+            <th><label>Ongoing</label></th>
+            <td><?php echo PJHtml::wf_checkBox('current',  "",array(
+				));?></td>
+        </tr>
+
 		<tr>
 			<th><label>Reference</label></th>
-			<td><?php echo PJHtml::wf_text_input('ref_url',  esc_html($options['api_url']),array(
+			<td><?php echo PJHtml::wf_text_input('ref_url',  "",array(
 					'style'=>'width:60%;'
 				));?></td>
 		</tr>
 
         <tr>
             <th><label>Published</label></th>
-            <td><?php echo PJHtml::wf_checkBox('published',  esc_html($options['api_url']),array(
+            <td><?php echo PJHtml::wf_checkBox('published',  "",array(
                 ));?></td>
         </tr>
 

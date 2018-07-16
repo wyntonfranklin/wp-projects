@@ -140,6 +140,7 @@ function ict_create_projects_table(){
   `end_date` date DEFAULT NULL,
   `ref_url` varchar(165) DEFAULT NULL,
   `published` int(11) DEFAULT NULL,
+	`current` int(11) DEFAULT NULL,
   PRIMARY KEY (`project_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;';
     $model->db()->query($projects_table);
@@ -259,7 +260,8 @@ function ict_render_new_projects_page(){
             'start_date' => $_POST['start_date'],
             'end_date' => $_POST['end_date'],
             'ref_url' => $_POST['ref_url'],
-            'published' => (!empty($_POST['published']) ? 1 : 0 )
+            'published' => (!empty($_POST['published']) ? 1 : 0 ),
+            'current' => (!empty($_POST['current']) ? 1 : 0 )
         ));
         echo PJHtml::formMessage('Project Created');
     }
@@ -281,6 +283,7 @@ function ict_render_edit_projects_page(){
         $project['end_date'] = $_POST['end_date'];
         $project['ref_url'] = $_POST['ref_url'];
         $project['published'] = (!empty($_POST['published']) ? 1 : 0 );
+	    $project['current'] = (!empty($_POST['current']) ? 1 : 0 );
         $model->update($project,'project_id',$project['project_id']);
         echo PJHtml::formMessage('Project updated');
 
@@ -378,7 +381,7 @@ function ict_project_short_code_view( $atts = [], $content = null, $tag = '' ){
         'name' => 'dashboard',
     ), $atts );
     $model = new PJModel('wp_ict_projects');
-    $projects = $model->findAll('WHERE published=1 ORDER BY start_date DESC');
+    $projects = $model->findAll('WHERE published=1 ORDER BY current DESC, end_date DESC');
     PJHtml::wf_render('shortcode_view',['attributes'=>$a,'projects'=>$projects]);
 }
 

@@ -78,12 +78,19 @@ PJHtml::wf_registerScript('editor-trumb',
                 ));?></td>
         </tr>
 
+
         <tr>
             <th><label>End Date</label></th>
             <td><?php echo PJHtml::wf_text_input('end_date',  esc_html($project['end_date']),array(
                     'style'=>'width:60%;',
                     'id' => 'end_date'
                 ));?></td>
+        </tr>
+
+        <tr>
+            <th><label>Ongoing</label></th>
+            <td><?php echo PJHtml::wf_checkBox('current',  esc_html($project['current']),array(
+		        ));?></td>
         </tr>
 
         <tr>

@@ -54,9 +54,19 @@ wp_enqueue_script('short-code-script',
                     View (<?php echo $teamCount;?>)</a>
             </td>
             <td><?php echo $project["start_date"];?></td>
-            <td><?php echo $project["end_date"];?></td>
-            <td><a target="_blank" href="<?php echo $project['ref_url'];?>">
-                 View</a>
+            <td><?php
+                if( $project["current"] == 1 ){
+	                echo "Present";
+                }else{
+	                echo $project["end_date"];
+                } ?>
+            </td>
+            <td>
+                <?php if(!empty($project["ref_url"])):?>
+                    <a target="_blank" href="<?php echo $project['ref_url'];?>">View</a>
+                <?php else:?>
+                <span>N/A</span>
+                <?php endif;?>
             </td>
         </tr>
         <?php endforeach;?>
