@@ -8,6 +8,7 @@ jQuery(function($){
     var projectTeam = $('#team-title');
     $(document).ready( function () {
         var jTable = $('#ict-projects-table').DataTable({
+            "order": [],
             "bLengthChange": false,
             "searching": false
         });

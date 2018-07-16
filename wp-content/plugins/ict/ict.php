@@ -378,7 +378,7 @@ function ict_project_short_code_view( $atts = [], $content = null, $tag = '' ){
         'name' => 'dashboard',
     ), $atts );
     $model = new PJModel('wp_ict_projects');
-    $projects = $model->findAll('WHERE published=1');
+    $projects = $model->findAll('WHERE published=1 ORDER BY start_date DESC');
     PJHtml::wf_render('shortcode_view',['attributes'=>$a,'projects'=>$projects]);
 }
 
