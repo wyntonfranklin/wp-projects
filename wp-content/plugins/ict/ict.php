@@ -382,7 +382,7 @@ function ict_project_short_code_view( $atts = [], $content = null, $tag = '' ){
     ), $atts );
     $model = new PJModel('wp_ict_projects');
     $projects = $model->findAll('WHERE published=1 ORDER BY current DESC, end_date DESC');
-    PJHtml::wf_render('shortcode_view',['attributes'=>$a,'projects'=>$projects]);
+    return PJHtml::wf_render('shortcode_view',['attributes'=>$a,'projects'=>$projects],false);
 }
 
 

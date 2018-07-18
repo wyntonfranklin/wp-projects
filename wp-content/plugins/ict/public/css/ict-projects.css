@@ -68,3 +68,30 @@
     border: 1px solid #CCC!important;
     padding: 5px 5px!important;
 }
+
+.ict-project-table-filters{
+    width: 100%;
+}
+
+.ict-project-table-filters input[type="text"]{
+    color: #666;
+    border: 1px solid #ccc;
+    height: 36px;
+    width: 35%;
+    -webkit-appearance: none;
+    display: inline-block;
+}
+
+.ict-project-filter-right{
+    clear:both;
+    display: inline-block!important;
+    width: 30%;
+    float: right;
+    text-align: right;
+}
+
+.ict-project-filter-right select{
+    display: inline-block;
+    width: 40%;
+    padding: 3px;
+}

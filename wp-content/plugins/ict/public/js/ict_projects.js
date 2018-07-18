@@ -4,14 +4,41 @@ jQuery(function($){
 
     var el = $('#modal-popup');
     var pj = $('#project-popup');
+    var searchInput = $('#ict-search-table');
+    var projectFilter = $('#project-type-filter');
+    var clientFilter = $('#project-client-filter');
+
     var teamContent = $('#teams-content');
     var projectTeam = $('#team-title');
     $(document).ready( function () {
         var jTable = $('#ict-projects-table').DataTable({
             "order": [],
             "bLengthChange": false,
-            "searching": false
+            "bFilter": false,
+            "searching": true,
+            sDom: 'ltipr',
         });
+
+        searchInput.on( 'keyup', function () {
+            searchTable();
+        } );
+
+        projectFilter.on('change',function(){
+            searchTable();
+        });
+
+        clientFilter.on('change',function(){
+           searchTable();
+        });
+
+        var searchTable = function ( ){
+            var searchInputText = searchInput.val();
+            var projectFilterText = projectFilter.val();
+            var clientFilterText = clientFilter.val();
+            var fullSearchText = searchInputText + " "
+                + projectFilterText + " " + clientFilterText;
+            jTable.search( fullSearchText ).draw();
+        }
     } );
 
     $('.view-team').on('click',function(){

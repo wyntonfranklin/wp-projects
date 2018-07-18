@@ -22,6 +22,33 @@ wp_enqueue_script('short-code-script',
 <!--<h1>ShortCode Title</h1> -->
 
 <div class="ict-project-table-container">
+    <div class="ict-project-table-filters">
+        <input id="ict-search-table" type="text" style="width: 35%;" placeholder="Search Projects..."/>
+        <div class="ict-project-filter-right" style="">
+            <span>Filter:</span>
+            <select id="project-type-filter" name="title" style="height: 30px;">
+            <option value="" selected>--by project type--</option>
+            <?php
+	            $pModel = new PJModel('wp_ict_project_types');
+	            $types = $pModel->findAll();
+	            $typesData = array();
+	            ?>
+	        <?php foreach($types as $type):?>
+                <option value="<?php echo stripslashes($type['project_type']);?>"><?php echo stripslashes($type['project_type']);?></option>
+	        <?php endforeach; ?>
+            </select>
+            <select id="project-client-filter" name="title" style="height: 30px;">
+                <option value="" selected>--by clients--</option>
+	            <?php
+	            $pModel = new PJModel('wp_ict_projects');
+	            $clients = $pModel->findAll("group by client");
+	            ?>
+	            <?php foreach($clients as $client):?>
+                    <option value="<?php echo stripslashes($client['client']);?>"><?php echo stripslashes($client['client']);?></option>
+	            <?php endforeach; ?>
+            </select>
+        </div>
+    </div>
     <table id="ict-projects-table" class="ict-projects-table">
         <thead>
         <tr>
