@@ -21,7 +21,7 @@ wp_enqueue_script('short-code-script',
 
 <!--<h1>ShortCode Title</h1> -->
 
-<div class="ict-project-table-container">
+<div class="ict-project-table-container" data-client="<?php echo $_GET["cn"];?>">
     <div class="ict-project-table-filters">
         <input id="ict-search-table" type="text" style="width: 35%;" placeholder="Search Projects..."/>
         <div class="ict-project-filter-right" style="">

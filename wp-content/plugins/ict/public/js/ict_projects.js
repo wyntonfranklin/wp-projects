@@ -4,6 +4,7 @@ jQuery(function($){
 
     var el = $('#modal-popup');
     var pj = $('#project-popup');
+    var shortCodeContainer = $(".ict-project-table-container");
     var searchInput = $('#ict-search-table');
     var projectFilter = $('#project-type-filter');
     var clientFilter = $('#project-client-filter');
@@ -38,7 +39,15 @@ jQuery(function($){
             var fullSearchText = searchInputText + " "
                 + projectFilterText + " " + clientFilterText;
             jTable.search( fullSearchText ).draw();
-        }
+        };
+
+        var searchOnParam = function(){
+            var param = shortCodeContainer.data('client');
+            if( param !== undefined && param !== "" ){
+                jTable.search( param ).draw();
+            }
+        };
+        searchOnParam(); // call function
     } );
 
     $('.view-team').on('click',function(){
@@ -56,6 +65,7 @@ jQuery(function($){
         getProjectDetails( $(this).data('project') );
         return false;
     });
+
 
     var getProjectDetails = function(projectId){
         $.post(ajax_url,{action:"ict_ajax_projects","projId":projectId},function(data){
@@ -100,4 +110,5 @@ jQuery(function($){
             }
         });
     };
+
 });
